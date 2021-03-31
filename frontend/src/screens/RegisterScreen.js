@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { Col, Row, Container, Form, Button } from 'react-bootstrap'
 import { auth } from '../firebase'
-import { toast, ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import { toast } from 'react-toastify'
 
 
 const RegisterScreen = () => {
@@ -11,7 +10,7 @@ const RegisterScreen = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()//this stop the browser from reload when the button action is called
         const config = {
-            url: 'http://localhost:3000/register/complete',
+            url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
             handleCodeInApp: true
         }
 
@@ -33,14 +32,14 @@ const RegisterScreen = () => {
             <Row>
                 <Col md={{ span: 6, offset: 3 }}>
                     <h4>Register</h4>
-                    <ToastContainer />
+
 
                     <Form onSubmit={handleSubmit}>
                         <Control
                             type='email'
                             value={email}
                             onChange={e => setEmail(e.target.value)}
-                            autofocus />
+                            autoFocus />
 
                         <Button type='submit' variant='raised'>Register</Button>
                     </Form>
