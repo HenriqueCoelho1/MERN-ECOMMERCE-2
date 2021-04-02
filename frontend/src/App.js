@@ -14,9 +14,7 @@ import { useDispatch } from 'react-redux'
 import { USER_LOGIN_SUCCESS } from './actions/types'
 
 
-
 const App = () => {
-
 
   const dispatch = useDispatch()
 
@@ -38,7 +36,8 @@ const App = () => {
 
     return () => unsubscribe()
 
-  }, [])
+  }, [dispatch])
+
 
   return (
     <Router>
