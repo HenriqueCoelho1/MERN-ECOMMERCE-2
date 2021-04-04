@@ -39,6 +39,7 @@ const RegisterScreen = () => {
                             type='email'
                             value={email}
                             onChange={e => setEmail(e.target.value)}
+                            placeholder='Your email'
                             autoFocus />
 
                         <Button type='submit' variant='raised'>Register</Button>
