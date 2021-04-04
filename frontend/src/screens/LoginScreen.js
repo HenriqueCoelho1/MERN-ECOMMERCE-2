@@ -3,16 +3,47 @@ import { Col, Row, Container, Form } from 'react-bootstrap'
 import { auth } from '../firebase'
 import { toast } from 'react-toastify'
 import { Button } from 'antd'
+import Loader from '../components/Loader'
 import { MailOutlined } from '@ant-design/icons'
+import { useDispatch, useSelector } from 'react-redux'
+import { USER_LOGIN_SUCCESS } from '../actions/types'
 
 
-const LoginScreen = () => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+const LoginScreen = ({ history }) => {
+    const [email, setEmail] = useState('megawats.oitavo@gmail.com')
+    const [password, setPassword] = useState('123456')
     const { Control, Group } = Form
+
+    const dispatch = useDispatch()
+
+    // const userLogin = useSelector(state => state.userLogin)
+
+    // const { loading, error, userInfo } = userLogin
 
     const handleSubmit = async (e) => {
         e.preventDefault()//this stop the browser from reload when the button action is called
+
+        try {
+            const result = await auth.signInWithEmailAndPassword(email, password)
+
+            const { user } = result
+            const idTokenResult = await user.getIdTokenResult()
+
+            dispatch({
+                type: USER_LOGIN_SUCCESS,
+                payload: {
+                    email: user.email,
+                    token: idTokenResult.token
+                }
+            })
+            history.push('/')
+
+
+        } catch (error) {
+            console.log(error)
+            toast.error(error.message)
+
+        }
 
 
     }
@@ -23,10 +54,9 @@ const LoginScreen = () => {
     return (
         <Container className='p-5'>
             <Row>
+                {/* {loading && <Loader />} */}
                 <Col md={{ span: 6, offset: 3 }}>
                     <h4>Login</h4>
-
-
                     <Form onSubmit={handleSubmit}>
                         <Group>
                             <Control
@@ -51,7 +81,7 @@ const LoginScreen = () => {
                         <br />
 
                         <Button
-                            type='submit'
+                            type='primary'
                             mb={3}
                             onClick={handleSubmit}
                             block
