@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Col, Row, Container, Form } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import { auth, googleAuthProvider } from '../firebase'
 import { toast } from 'react-toastify'
 import { Button } from 'antd'
@@ -129,6 +130,10 @@ const LoginScreen = ({ history }) => {
                         size="large">
                         Login with Google
                         </Button>
+
+                    <Link to='/forgot/password' className='float-right text-danger'>
+                        Forgot Password
+                        </Link>
                 </Col>
 
             </Row>
