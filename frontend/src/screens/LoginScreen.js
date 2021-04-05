@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Col, Row, Container, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { auth, googleAuthProvider } from '../firebase'
@@ -18,9 +18,18 @@ const LoginScreen = ({ history }) => {
 
     const dispatch = useDispatch()
 
-    // const userLogin = useSelector(state => state.userLogin)
 
-    // const { loadingLogin, error, userInfo } = userLogin
+    const userLogin = useSelector(state => state.userLogin)
+
+    const { userInfo } = userLogin
+
+    const { token: tokenLogged } = userInfo || {}
+
+    useEffect(() => {
+        if (userInfo && tokenLogged) {
+            history.push('/')
+        }
+    }, [userInfo, history, tokenLogged])
 
     const handleSubmit = async (e) => {
         e.preventDefault()//this stop the browser from reload when the button action is called

@@ -1,14 +1,32 @@
 import React, { useState, useEffect } from 'react'
-import { Col, Row, Container, Form, Button } from 'react-bootstrap'
+import { Col, Container, Form, Button } from 'react-bootstrap'
 import { auth } from '../firebase'
 import { toast } from 'react-toastify'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 
 const ForgotPasswordScreen = ({ history }) => {
     const [email, setEmail] = useState('')
 
     const { Control } = Form
+
+
+    // const { userLogin } = useSelector((state) => ({ ...state }))
+
+    const userLogin = useSelector(state => state.userLogin)
+
+    const { userInfo } = userLogin
+
+    const { token: tokenLogged } = userInfo || {}
+
+    useEffect(() => {
+        if (userInfo && tokenLogged) {
+            history.push('/')
+        }
+    }, [userInfo, history, tokenLogged])
+
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
