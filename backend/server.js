@@ -5,8 +5,11 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import colors from 'colors'
 import connectDB from './config/db.js'
-
+//middleware imports
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
+
+//route imports
+import userRoutes from './routes/userRoutes.js'
 
 dotenv.config()
 
@@ -14,6 +17,10 @@ connectDB()
 
 const app = express()
 
+
+app.use(express.json())
+//route middleware
+app.use('/api/users', userRoutes)
 
 app.get('/', (req, res) => {
     res.send('API IS RUNNING')
@@ -27,9 +34,6 @@ if (process.env.NODE_ENV === 'development') {
 app.use(notFound)
 app.use(errorHandler)
 app.use(cors())
-
-//route
-
 
 const PORT = process.env.PORT || 5000
 
