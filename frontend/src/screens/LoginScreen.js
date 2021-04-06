@@ -19,17 +19,17 @@ const LoginScreen = ({ history }) => {
     const dispatch = useDispatch()
 
 
-    const userLogin = useSelector(state => state.userLogin)
+    // const userLogin = useSelector(state => state.userLogin)
+    // const { userInfo } = userLogin
+    // const { token: tokenLogged } = userInfo || {}
 
-    const { userInfo } = userLogin
-
-    const { token: tokenLogged } = userInfo || {}
+    let { userLogin } = useSelector((state) => ({ ...state }))
 
     useEffect(() => {
-        if (userInfo && tokenLogged) {
+        if (userLogin && userLogin.token) {
             history.push('/')
         }
-    }, [userInfo, history, tokenLogged])
+    }, [userLogin, history])
 
     const handleSubmit = async (e) => {
         e.preventDefault()//this stop the browser from reload when the button action is called

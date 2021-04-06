@@ -13,8 +13,9 @@ const Header = () => {
     const [current, setCurrent] = useState('home')
 
     let dispatch = useDispatch()
-    let userLogin = useSelector(state => state.userLogin)
-    const { userInfo } = userLogin
+    let { userLogin } = useSelector((state) => ({ ...state }))
+    // let userLogin = useSelector(state => state.userLogin)
+    // const { userInfo } = userLogin
 
     const history = useHistory()
 
@@ -38,19 +39,19 @@ const Header = () => {
                 <Link to='/'>Home</Link>
             </Item>
 
-            {!userInfo && (<Item key="register" icon={<UserAddOutlined />} className='float-right'>
+            {!userLogin && (<Item key="register" icon={<UserAddOutlined />} className='float-right'>
                 <Link to='/register'>Register</Link>
             </Item>)}
 
-            {!userInfo && (<Item key="login" icon={<UserOutlined />} className='float-right'>
+            {!userLogin && (<Item key="login" icon={<UserOutlined />} className='float-right'>
                 <Link to='/login'>Login</Link>
             </Item>)}
 
 
-            {userInfo &&
+            {userLogin &&
                 (<SubMenu key="SubMenu"
                     icon={<SettingOutlined />}
-                    title={userInfo.email && userInfo.email.split('@')[0]}
+                    title={userLogin.email && userLogin.email.split('@')[0]}
                     className='float-right'>
                     <Item key="setting:1">Option 1</Item>
                     <Item key="setting:2">Option 2</Item>

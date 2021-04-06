@@ -11,19 +11,17 @@ const ForgotPasswordScreen = ({ history }) => {
     const { Control } = Form
 
 
-    // const { userLogin } = useSelector((state) => ({ ...state }))
+    let { userLogin } = useSelector((state) => ({ ...state }))
 
-    const userLogin = useSelector(state => state.userLogin)
-
-    const { userInfo } = userLogin
-
-    const { token: tokenLogged } = userInfo || {}
+    // const userLogin = useSelector(state => state.userLogin)
+    // const { userInfo } = userLogin
+    // const { token: tokenLogged } = userInfo || {}
 
     useEffect(() => {
-        if (userInfo && tokenLogged) {
+        if (userLogin && userLogin.token) {
             history.push('/')
         }
-    }, [userInfo, history, tokenLogged])
+    }, [userLogin, history])
 
 
 
@@ -34,7 +32,7 @@ const ForgotPasswordScreen = ({ history }) => {
         const config = {
             url: process.env.REACT_APP_FORGOT_PASSWORD_REDIRECT,
             handleCodeInApp: true,
-        };
+        }
 
         await auth
             .sendPasswordResetEmail(email, config)
@@ -45,7 +43,7 @@ const ForgotPasswordScreen = ({ history }) => {
             })
             .catch((error) => {
                 toast.error(error.message);
-            });
+            })
     }
     return (
 

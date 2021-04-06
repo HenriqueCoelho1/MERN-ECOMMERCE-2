@@ -1,11 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { Col, Row, Container, Form, Button } from 'react-bootstrap'
 import { auth } from '../firebase'
 import { toast } from 'react-toastify'
 
 
-const RegisterScreen = () => {
+const RegisterScreen = ({ history }) => {
     const { Control } = Form
+
+    // const userLogin = useSelector(state => state.userLogin)
+    // const { userInfo } = userLogin
+    // const { token: tokenLogged } = userInfo || {}
+
+    let { userLogin } = useSelector((state) => ({ ...state }))
+
+    useEffect(() => {
+        if (userLogin && userLogin.token) {
+            history.push('/')
+        }
+    }, [userLogin, history])
 
     const handleSubmit = async (e) => {
         e.preventDefault()//this stop the browser from reload when the button action is called
