@@ -14,13 +14,12 @@ import userRoutes from './routes/userRoutes.js'
 dotenv.config()
 
 connectDB()
-
 const app = express()
-
-
 app.use(express.json())
+
 //route middleware
 app.use('/api/users', userRoutes)
+// readdirSync("./routes").map((r) => app.use("/api", dirRoutes + r));
 
 app.get('/', (req, res) => {
     res.send('API IS RUNNING')
