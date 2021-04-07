@@ -1,11 +1,16 @@
-export const createOrUpdateUser = (req, res) => {
+import asyncHandler from 'express-async-handler'
+
+const createOrUpdateUser = asyncHandler(async (req, res) => {
     res.json({
         data: 'You hit the endpoint'
     })
-}
+})
 
-export const home = (req, res) => {
+const home = (req, res) => {
     res.json({
         data: 'Hello user route'
     })
 }
+
+
+export { createOrUpdateUser, home }
