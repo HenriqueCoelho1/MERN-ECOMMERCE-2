@@ -8,6 +8,16 @@ import Loader from '../components/Loader'
 import { MailOutlined, GoogleOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { USER_LOGIN_SUCCESS } from '../actions/types'
+import axios from 'axios'
+
+
+const createOrUpdateUser = async (authtoken) => {
+    return await axios.post(process.env.REACT_APP_API, {}, {
+        headers: {
+            authtoken
+        }
+    })
+}
 
 
 const LoginScreen = ({ history }) => {
@@ -41,14 +51,18 @@ const LoginScreen = ({ history }) => {
             const { user } = result
             const idTokenResult = await user.getIdTokenResult()
 
-            dispatch({
-                type: USER_LOGIN_SUCCESS,
-                payload: {
-                    email: user.email,
-                    token: idTokenResult.token
-                }
-            })
-            history.push('/')
+            createOrUpdateUser(idTokenResult.token)
+                .then((res) => console.log('AAAAAA', res))
+                .catch()
+
+            // dispatch({
+            //     type: USER_LOGIN_SUCCESS,
+            //     payload: {
+            //         email: user.email,
+            //         token: idTokenResult.token
+            //     }
+            // })
+            // history.push('/')
 
 
         } catch (error) {

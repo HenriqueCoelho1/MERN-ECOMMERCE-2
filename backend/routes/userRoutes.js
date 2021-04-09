@@ -7,8 +7,7 @@ import { home, createOrUpdateUser } from '../controllers/userController.js'
 //midlewares
 import { authCheck } from '../middleware/authMiddleware.js'
 
-router.get('/', home)
-router.get('/create-or-update-user', authCheck, createOrUpdateUser)
+router.post('/create-or-update-user', authCheck, createOrUpdateUser)
 
 
 

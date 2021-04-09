@@ -6,7 +6,7 @@ import cors from 'cors'
 import colors from 'colors'
 import connectDB from './config/db.js'
 //middleware imports
-import { notFound, errorHandler } from './middleware/errorMiddleware.js'
+// import { notFound } from './middleware/errorMiddleware.js'
 
 //route imports
 import userRoutes from './routes/userRoutes.js'
@@ -18,7 +18,7 @@ const app = express()
 app.use(express.json())
 
 //route middleware
-app.use('/api/users', userRoutes)
+app.use('/api', userRoutes)
 // readdirSync("./routes").map((r) => app.use("/api", dirRoutes + r));
 
 app.get('/', (req, res) => {
@@ -30,8 +30,8 @@ app.get('/', (req, res) => {
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'))
 }
-app.use(notFound)
-app.use(errorHandler)
+// app.use(notFound)
+// app.use(errorHandler)
 app.use(cors())
 
 const PORT = process.env.PORT || 5000
