@@ -19,7 +19,6 @@ const createOrUpdateUser = async (authtoken) => {
     })
 }
 
-
 const LoginScreen = ({ history }) => {
     const [email, setEmail] = useState('megawats.oitavo@gmail.com')
     const [password, setPassword] = useState('123456')
@@ -52,8 +51,9 @@ const LoginScreen = ({ history }) => {
             const idTokenResult = await user.getIdTokenResult()
 
             createOrUpdateUser(idTokenResult.token)
-                .then((res) => console.log('AAAAAA', res))
-                .catch()
+                .then((res) => console.log("CREATE OR UPDATE RES", res))
+                .catch();
+
 
             // dispatch({
             //     type: USER_LOGIN_SUCCESS,

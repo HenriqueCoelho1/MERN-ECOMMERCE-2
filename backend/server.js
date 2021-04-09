@@ -1,41 +1,33 @@
-import express from 'express'
-import dotenv from 'dotenv'
-import morgan from 'morgan'
-import bodyParser from 'body-parser'
-import cors from 'cors'
-import colors from 'colors'
-import connectDB from './config/db.js'
-//middleware imports
-// import { notFound } from './middleware/errorMiddleware.js'
+const express = require("express");
+const mongoose = require("mongoose");
+const morgan = require("morgan");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const { readdirSync } = require("fs");
+require("dotenv").config();
 
-//route imports
-import userRoutes from './routes/userRoutes.js'
+// app
+const app = express();
 
-dotenv.config()
+// db
+mongoose
+  .connect(process.env.DATABASE, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: true,
+  })
+  .then(() => console.log("DB CONNECTED"))
+  .catch((err) => console.log("DB CONNECTION ERR", err));
 
-connectDB()
-const app = express()
-app.use(express.json())
+// middlewares
+app.use(morgan("dev"));
+app.use(bodyParser.json({ limit: "2mb" }));
+app.use(cors());
 
-//route middleware
-app.use('/api', userRoutes)
-// readdirSync("./routes").map((r) => app.use("/api", dirRoutes + r));
+// routes middleware
+readdirSync("./routes").map((r) => app.use("/api", require("./routes/" + r)));
 
-app.get('/', (req, res) => {
-    res.send('API IS RUNNING')
-})
+// port
+const port = process.env.PORT || 8000;
 
-//middleware <-----
-// app.use(bodyParser.json({limit: '2mb'}))
-if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'))
-}
-// app.use(notFound)
-// app.use(errorHandler)
-app.use(cors())
-
-const PORT = process.env.PORT || 5000
-
-app.listen(PORT,
-    console.log(
-        `Server Running on Port ${process.env.NODE_ENV} on port ${PORT}`.yellow.bold))
+app.listen(port, () => console.log(`Server is running on port ${port}`));
