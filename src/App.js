@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -9,10 +9,33 @@ import RegisterComplete from './pages/auth/RegisterComplete'
 import Home from './pages/Home'
 import Header from './components/nav/Header'
 
-
+import { auth } from './firebase'
+import { useDispatch } from 'react-redux'
+import { LOGGED_IN_USER } from './actions/types'
 
 
 const App = () => {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const IdTokenResult = await user.getIdTokenResult()
+
+        console.log(user)
+        dispatch({
+          type: LOGGED_IN_USER,
+          payload: {
+            email: user.email,
+            token: IdTokenResult
+
+          }
+        })
+      }
+    })
+    return () => unsubscribe
+  }, [])
+
   return (
     <>
       <Header />

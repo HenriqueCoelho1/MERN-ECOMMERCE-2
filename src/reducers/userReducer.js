@@ -1,6 +1,6 @@
 import { LOGGED_IN_USER, LOGOUT } from '../actions/types'
 
-export function userReducer(state = null, action) {
+export const userReducer = (state = null, action) => {
     const { type, payload } = action
 
     switch (type) {
