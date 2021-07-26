@@ -20,14 +20,14 @@ const App = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
-        const IdTokenResult = await user.getIdTokenResult()
+        const idTokenResult = await user.getIdTokenResult()
 
         console.log(user)
         dispatch({
           type: LOGGED_IN_USER,
           payload: {
             email: user.email,
-            token: IdTokenResult
+            token: idTokenResult
 
           }
         })
