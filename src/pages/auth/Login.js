@@ -8,6 +8,7 @@ import {
 } from '@ant-design/icons'
 import { useDispatch } from 'react-redux'
 import { LOGGED_IN_USER } from '../../actions/types'
+import { Link } from 'react-router-dom'
 
 const Login = ({ history }) => {
 
@@ -112,6 +113,8 @@ const Login = ({ history }) => {
                             size="large"
                             icon={<GoogleOutlined />}
                         >Login With Google</Button>
+
+                        <Link to="/forgot/password" className="float-right text-danger">Forgot Password</Link>
                     </form>
                 </div>
             </div>
