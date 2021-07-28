@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { auth, googleAuthProvider } from '../../firebase'
 import { toast } from 'react-toastify'
 import { Button } from 'antd'
@@ -6,7 +6,7 @@ import {
     MailOutlined,
     GoogleOutlined
 } from '@ant-design/icons'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { LOGGED_IN_USER } from '../../actions/types'
 import { Link } from 'react-router-dom'
 
@@ -15,6 +15,15 @@ const Login = ({ history }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
+
+    const { user } = useSelector((state) => ({ ...state }))
+
+    useEffect(() => {
+        if (user && user.token) {
+            history.push('/')
+        }
+    }, [user])
+
 
     const dispatch = useDispatch()
 
