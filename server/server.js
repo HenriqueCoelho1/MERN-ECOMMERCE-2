@@ -1,8 +1,10 @@
 const express = require('express')
-const dbConnection = require('./db/config')
 const morgan = require('morgan')
 const cors = require('cors')
 require('dotenv').config()
+const dbConnection = require('./db/config')
+const auth = require('./routes/auth')
+const { readdirSync } = require('fs')
 
 
 
@@ -13,12 +15,8 @@ dbConnection()
 
 app.use(morgan("dev"))
 app.use(cors())
+readdirSync('./routes').map((r) => app.use('/api', require('./routes/' + r)))
 
-app.get('/api', (req, res) => {
-    res.json({
-        data: "Hey you hit node API"
-    })
-})
 
 const PORT = process.env.PORT || 5000
 
