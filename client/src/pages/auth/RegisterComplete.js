@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { auth } from '../../firebase'
 import { toast } from 'react-toastify'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { createOrUpdateUser } from '../../functions/auth'
+import { auth } from '../../firebase'
+import { LOGGED_IN_USER } from '../../actions/types'
+
+
+
 
 const Register = ({ history }) => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const dispatch = useDispatch()
 
     const { user } = useSelector((state) => ({ ...state }))
 
@@ -44,8 +50,20 @@ const Register = ({ history }) => {
                 window.localStorage.removeItem("emailForRegistration")
                 let user = auth.currentUser
                 await user.updatePassword(password)
-                const id = await user.getIdTokenResult()
+                const idTokenResult = await user.getIdTokenResult()
 
+                createOrUpdateUser(idTokenResult.token)
+                    .then(res => dispatch({
+                        type: LOGGED_IN_USER,
+                        payload: {
+                            name: res.data.name,
+                            email: res.data.email,
+                            token: idTokenResult.token,
+                            role: res.data.role,
+                            _id: res.data._id
+                        }
+                    }))
+                    .catch()
                 history.push('/')
 
             }
