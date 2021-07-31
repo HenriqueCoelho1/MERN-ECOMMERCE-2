@@ -7,6 +7,8 @@ import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
 import RegisterComplete from './pages/auth/RegisterComplete'
 import History from './pages/user/History'
+import Password from './pages/user/Password'
+import Wishlist from './pages/user/Wishlist'
 import ForgotPassword from './pages/auth/ForgotPassword'
 import Home from './pages/Home'
 import Header from './components/nav/Header'
@@ -56,6 +58,8 @@ const App = () => {
         <Route exact path="/register/complete" component={RegisterComplete} />
         <Route exact path="/forgot/password" component={ForgotPassword} />
         <UserRoute exact path="/user/History" component={History} />
+        <UserRoute exact path="/user/Password" component={Password} />
+        <UserRoute exact path="/user/Wishlist" component={Wishlist} />
       </Switch>
     </>
   )

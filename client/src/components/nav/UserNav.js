@@ -12,7 +12,7 @@ const UserNav = () => {
                     <Link to="/user/password" className="nav-link">Password</Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/user/history" className="nav-link">WishList</Link>
+                    <Link to="/user/wishlist" className="nav-link">WishList</Link>
                 </li>
             </ul>
 
