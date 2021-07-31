@@ -6,11 +6,13 @@ import 'react-toastify/dist/ReactToastify.css'
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
 import RegisterComplete from './pages/auth/RegisterComplete'
+import History from './pages/user/History'
 import ForgotPassword from './pages/auth/ForgotPassword'
 import Home from './pages/Home'
 import Header from './components/nav/Header'
-import { currentUser } from './functions/auth'
+import UserRoute from './components/routes/UserRoute'
 
+import { currentUser } from './functions/auth'
 import { auth } from './firebase'
 import { useDispatch } from 'react-redux'
 import { LOGGED_IN_USER } from './actions/types'
@@ -53,6 +55,7 @@ const App = () => {
         <Route exact path="/register" component={Register} />
         <Route exact path="/register/complete" component={RegisterComplete} />
         <Route exact path="/forgot/password" component={ForgotPassword} />
+        <UserRoute exact path="/user/History" component={History} />
       </Switch>
     </>
   )
