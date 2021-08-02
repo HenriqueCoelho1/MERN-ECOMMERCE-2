@@ -11,8 +11,7 @@ const { readdirSync } = require('fs')
 const app = express()
 dbConnection()
 
-
-
+app.use(express.urlencoded({ extended: true }))
 app.use(morgan("dev"))
 app.use(cors())
 readdirSync('./routes').map((r) => app.use('/api', require('./routes/' + r)))
