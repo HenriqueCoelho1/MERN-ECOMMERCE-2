@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Menu } from 'antd'
 import {
-    MailOutlined,
     AppstoreOutlined,
     SettingOutlined,
     UserOutlined,

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { auth } from '../../firebase'
 import { toast } from 'react-toastify'
-import { Button } from 'antd'
 import { useSelector } from 'react-redux'
 
 const ForgotPassword = ({ history }) => {
@@ -15,7 +14,7 @@ const ForgotPassword = ({ history }) => {
         if (user && user.token) {
             history.push('/')
         }
-    }, [user])
+    }, [user, history])
 
 
     const handleSubmit = async (e) => {

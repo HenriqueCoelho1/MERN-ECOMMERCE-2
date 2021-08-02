@@ -20,7 +20,7 @@ const Register = ({ history }) => {
         if (email === null) {
             history.push('/')
         }
-    })
+    }, [email, history])
 
     useEffect(() => {
         setEmail(window.localStorage.getItem("emailForRegistration"))
@@ -30,7 +30,7 @@ const Register = ({ history }) => {
         if (user && user.token) {
             history.push('/')
         }
-    }, [user])
+    }, [user, history])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
