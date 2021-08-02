@@ -10,9 +10,11 @@ import History from './pages/user/History'
 import Password from './pages/user/Password'
 import Wishlist from './pages/user/Wishlist'
 import ForgotPassword from './pages/auth/ForgotPassword'
+import Dashboard from './pages/admin/Dashboard'
 import Home from './pages/Home'
 import Header from './components/nav/Header'
 import UserRoute from './components/routes/UserRoute'
+import AdminRoute from './components/routes/AdminRoute'
 
 import { currentUser } from './functions/auth'
 import { auth } from './firebase'
@@ -60,6 +62,7 @@ const App = () => {
         <UserRoute exact path="/user/History" component={History} />
         <UserRoute exact path="/user/Password" component={Password} />
         <UserRoute exact path="/user/Wishlist" component={Wishlist} />
+        <AdminRoute exact path="/admin/dashboard" component={Dashboard} />
       </Switch>
     </>
   )
