@@ -13,6 +13,7 @@ import ForgotPassword from './pages/auth/ForgotPassword'
 import Dashboard from './pages/admin/Dashboard'
 import CategoryCreate from './pages/admin/category/CategoryCreate'
 import CategoryUpdate from './pages/admin/category/CategoryUpdate'
+import SubCreate from './pages/admin/sub/SubCreate'
 import Home from './pages/Home'
 import Header from './components/nav/Header'
 import UserRoute from './components/routes/UserRoute'
@@ -67,6 +68,7 @@ const App = () => {
         <AdminRoute exact path="/admin/dashboard" component={Dashboard} />
         <AdminRoute exact path="/admin/category" component={CategoryCreate} />
         <AdminRoute exact path="/admin/category/:slug" component={CategoryUpdate} />
+        <AdminRoute exact path="/admin/sub" component={SubCreate} />
       </Switch>
     </>
   )
