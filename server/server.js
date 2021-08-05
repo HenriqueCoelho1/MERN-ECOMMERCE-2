@@ -1,21 +1,32 @@
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
-// const bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
 require('dotenv').config()
-const dbConnection = require('./db/config')
+const db = process.env.DATABASE
 const auth = require('./routes/auth')
 const { readdirSync } = require('fs')
 
 
 
 const app = express()
-dbConnection()
 
-app.use(express.urlencoded({ limit: "2mb" }))
-app.use(express.json())
-// app.use(bodyParser.json())
+mongoose.connect(db, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: true,
+    useUnifiedTopology: true
+})
+    .then(() => console.log('MongoDB connected'))
+    .catch((err) => console.log(err.message))
+
+
+
 app.use(morgan("dev"))
+app.use(bodyParser.json())
+// app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
 app.use(cors())
 readdirSync('./routes').map((r) => app.use('/api', require('./routes/' + r)))
 
