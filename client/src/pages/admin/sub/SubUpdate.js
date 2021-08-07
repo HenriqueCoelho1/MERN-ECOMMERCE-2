@@ -2,12 +2,9 @@ import React, { useState, useEffect } from 'react'
 import AdminNav from '../../../components/nav/AdminNav'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { getCategories } from '../../../functions/category'
-import { updateSub, getSub, removeSub } from '../../../functions/sub'
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { updateSub, getSub } from '../../../functions/sub'
 import CategoryForm from '../../../components/form/CategoryForm'
-import LocalSearch from '../../../components/form/LocalSearch'
 
 const SubUpdate = ({ match, history }) => {
     const { user } = useSelector(state => ({ ...state }))
