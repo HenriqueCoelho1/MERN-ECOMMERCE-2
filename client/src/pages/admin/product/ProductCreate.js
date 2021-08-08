@@ -24,6 +24,8 @@ const initialState = {
 const ProductCreate = () => {
     const [values, setValues] = useState(initialState)
 
+    const { user } = useSelector((state) => ({ ...state }))
+
     const { title,
         description,
         price,
@@ -40,9 +42,17 @@ const ProductCreate = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        createProduct(values, user.token)
+            .then((res) => {
+                console.log(res)
+                toast.success(`Your product is created`)
+            }).catch((err) => {
+                console.log(err)
+                if (err.response.status === 400) toast.error(err.response.data)
+            })
     }
     const handleChange = (e) => {
-
+        setValues({ ...values, [e.target.name]: e.target.value })
     }
     return (
         <div className="container-fluid">
@@ -122,7 +132,7 @@ const ProductCreate = () => {
                                 {brands.map(b => <option key={b} value={b}>{b}</option>)}
                             </select>
                         </div>
-
+                        <button className="btn btn-outline-info">Save</button>
                     </form>
                 </div>
             </div>
