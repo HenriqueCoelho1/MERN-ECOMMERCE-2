@@ -45,10 +45,13 @@ const ProductCreate = () => {
         createProduct(values, user.token)
             .then((res) => {
                 console.log(res)
-                toast.success(`Your product is created`)
+                window.alert(`${res.data.title} is created`)
+                window.location.reload()
+                // toast.success(`Your product is created`)
             }).catch((err) => {
                 console.log(err)
-                if (err.response.status === 400) toast.error(err.response.data)
+                // if (err.response.status === 400) toast.error(err.response.data)
+                toast.error(err.response.data.err)
             })
     }
     const handleChange = (e) => {
