@@ -13,7 +13,7 @@ const initialState = {
     price: "",
     categories: [],
     category: "",
-    sub: [],
+    subs: [],
     shipping: "",
     quantity: "",
     images: [],
@@ -57,13 +57,14 @@ const ProductCreate = () => {
     const handleCategoryChange = (e) => {
         e.preventDefault()
         console.log("Clicked Down", e.target.value)
-        setValues({ ...values, category: e.target.value })
+        setValues({ ...values, subs: [], category: e.target.value })
         getCategorySubs(e.target.value)
             .then((res) => {
                 console.log("ALL CATEGORIES", res)
                 setSubOptions(res.data)
 
             })
+        setShowSub(true)
 
     }
     return (
@@ -79,6 +80,7 @@ const ProductCreate = () => {
                         handleChange={handleChange}
                         handleSubmit={handleSubmit}
                         values={values}
+                        setValues={setValues}
                         handleCategoryChange={handleCategoryChange}
                         subOptions={subOptions}
                         showSub={showSub} />
