@@ -3,7 +3,7 @@ import AdminNav from '../../../components/nav/AdminNav'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { createProduct } from '../../../functions/product'
-import { getCategories } from '../../../functions/category'
+import { getCategories, getCategorySubs } from '../../../functions/category'
 import ProductCreateForm from '../../../components/form/ProductCreateForm'
 
 
@@ -25,6 +25,8 @@ const initialState = {
 
 const ProductCreate = () => {
     const [values, setValues] = useState(initialState)
+    const [subOptions, setSubOptions] = useState([])
+    const [showSub, setShowSub] = useState(false)
 
     const { user } = useSelector((state) => ({ ...state }))
 
@@ -52,6 +54,18 @@ const ProductCreate = () => {
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value })
     }
+    const handleCategoryChange = (e) => {
+        e.preventDefault()
+        console.log("Clicked Down", e.target.value)
+        setValues({ ...values, category: e.target.value })
+        getCategorySubs(e.target.value)
+            .then((res) => {
+                console.log("ALL CATEGORIES", res)
+                setSubOptions(res.data)
+
+            })
+
+    }
     return (
         <div className="container-fluid">
             <div className="row">
@@ -61,7 +75,13 @@ const ProductCreate = () => {
                 <div className="col-md-10">
                     <h4>Product Create</h4>
                     <hr />
-                    <ProductCreateForm handleChange={handleChange} handleSubmit={handleSubmit} values={values} />
+                    <ProductCreateForm
+                        handleChange={handleChange}
+                        handleSubmit={handleSubmit}
+                        values={values}
+                        handleCategoryChange={handleCategoryChange}
+                        subOptions={subOptions}
+                        showSub={showSub} />
 
                 </div>
             </div>
