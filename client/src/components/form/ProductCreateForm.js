@@ -86,8 +86,21 @@ const ProductCreateForm = ({ handleChange, handleSubmit, values }) => {
                     {brands.map(b => <option key={b} value={b}>{b}</option>)}
                 </select>
             </div>
+            <div className="form-group">
+                <label>Parent Category</label>
+                <select
+                    name="category"
+                    className="form-control"
+                    onChange={handleChange}>
+                    <option>Please Select</option>
+                    {categories.length > 0 && categories.map((c) => (
+                        <option value={c._id} key={c._id}>{c.name}</option>
+                    ))}
+                </select>
+            </div>
             <button className="btn btn-outline-info">Save</button>
         </form>
+
 
     )
 }
