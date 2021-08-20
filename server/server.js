@@ -25,7 +25,8 @@ mongoose.connect(db, {
 
 app.use(morgan("dev"))
 
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ limit: "50mb", parameterLimit: 500000000 }));
+app.use(bodyParser({ limit: '50mb' }));
 app.use(express.json());
 app.use(cors())
 readdirSync('./routes').map((r) => app.use('/api', require('./routes/' + r)))
