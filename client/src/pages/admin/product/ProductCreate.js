@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { createProduct } from '../../../functions/product'
 import { getCategories, getCategorySubs } from '../../../functions/category'
 import ProductCreateForm from '../../../components/form/ProductCreateForm'
+import FileUpload from '../../../components/form/FileUpload'
 
 
 const initialState = {
@@ -76,6 +77,9 @@ const ProductCreate = () => {
                 <div className="col-md-10">
                     <h4>Product Create</h4>
                     <hr />
+                    <div className="p-3">
+                        <FileUpload />
+                    </div>
                     <ProductCreateForm
                         handleChange={handleChange}
                         handleSubmit={handleSubmit}
