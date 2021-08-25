@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import AdminNav from '../../../components/nav/AdminNav'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
-import { createProduct } from '../../../functions/product'
+import { getProduct } from '../../../functions/product'
 import { getCategories, getCategorySubs } from '../../../functions/category'
 import ProductCreateForm from '../../../components/form/ProductCreateForm'
 import FileUpload from '../../../components/form/FileUpload'
@@ -24,9 +24,29 @@ const initialState = {
     brand: ""
 }
 
-const ProductUpdate = () => {
+
+const ProductUpdate = ({ match }) => {
+
+    const [values, setValues] = useState(initialState)
+    const [subOptions, setSubOptions] = useState([])
+    const [showSub, setShowSub] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const { user } = useSelector((state) => ({ ...state }))
+
+    const { slug } = match.params
+
+    useEffect(() => {
+        loadProduct()
+
+    }, [])
+
+    const loadProduct = () => {
+        getProduct(slug)
+            .then(p => {
+                setValues({ ...values, ...p.data })
+            })
+    }
 
 
     return (
@@ -38,6 +58,7 @@ const ProductUpdate = () => {
                 <div className="col-md-10">
                     <h4>Product Update</h4>
                     <hr />
+                    {JSON.stringify(values)}
 
                 </div>
             </div>
