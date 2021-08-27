@@ -4,7 +4,6 @@ import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { getProduct } from '../../../functions/product'
 import { getCategories, getCategorySubs } from '../../../functions/category'
-import ProductCreateForm from '../../../components/form/ProductCreateForm'
 import FileUpload from '../../../components/form/FileUpload'
 import { LoadingOutlined } from '@ant-design/icons'
 import ProductUpdateForm from '../../../components/form/ProductUpdateForm'
@@ -13,7 +12,6 @@ const initialState = {
     title: "",
     description: "",
     price: "",
-    categories: [],
     category: "",
     subs: [],
     shipping: "",
@@ -29,9 +27,10 @@ const initialState = {
 const ProductUpdate = ({ match }) => {
 
     const [values, setValues] = useState(initialState)
-    // const [subOptions, setSubOptions] = useState([])
-    // const [showSub, setShowSub] = useState(false)
-    // const [loading, setLoading] = useState(false)
+    const [categories, setCategories] = useState([])
+    const [subOptions, setSubOptions] = useState([])
+    const [showSub, setShowSub] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const { user } = useSelector((state) => ({ ...state }))
 
@@ -39,6 +38,7 @@ const ProductUpdate = ({ match }) => {
 
     useEffect(() => {
         loadProduct()
+        loadCategories()
 
     }, [])
 
@@ -49,6 +49,8 @@ const ProductUpdate = ({ match }) => {
             })
     }
 
+    const loadCategories = () =>
+        getCategories().then((c) => setValues({ ...values, categories: c.data }))
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -56,6 +58,20 @@ const ProductUpdate = ({ match }) => {
 
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value })
+    }
+
+    const handleCategoryChange = (e) => {
+        e.preventDefault()
+        console.log("Clicked Down", e.target.value)
+        setValues({ ...values, subs: [], category: e.target.value })
+        getCategorySubs(e.target.value)
+            .then((res) => {
+                console.log("ALL CATEGORIES", res)
+                setSubOptions(res.data)
+
+            })
+        setShowSub(true)
+
     }
 
     return (
@@ -72,7 +88,10 @@ const ProductUpdate = ({ match }) => {
                         handleChange={handleChange}
                         handleSubmit={handleSubmit}
                         values={values}
-                        setValues={setValues} />
+                        setValues={setValues}
+                        categories={categories}
+                        showSub={showSub}
+                        handleCategoryChange={handleCategoryChange} />
 
                 </div>
             </div>
