@@ -7,6 +7,7 @@ import { getCategories, getCategorySubs } from '../../../functions/category'
 import ProductCreateForm from '../../../components/form/ProductCreateForm'
 import FileUpload from '../../../components/form/FileUpload'
 import { LoadingOutlined } from '@ant-design/icons'
+import ProductUpdateForm from '../../../components/form/ProductUpdateForm'
 
 const initialState = {
     title: "",
@@ -28,9 +29,9 @@ const initialState = {
 const ProductUpdate = ({ match }) => {
 
     const [values, setValues] = useState(initialState)
-    const [subOptions, setSubOptions] = useState([])
-    const [showSub, setShowSub] = useState(false)
-    const [loading, setLoading] = useState(false)
+    // const [subOptions, setSubOptions] = useState([])
+    // const [showSub, setShowSub] = useState(false)
+    // const [loading, setLoading] = useState(false)
 
     const { user } = useSelector((state) => ({ ...state }))
 
@@ -49,6 +50,14 @@ const ProductUpdate = ({ match }) => {
     }
 
 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+    }
+
+    const handleChange = (e) => {
+        setValues({ ...values, [e.target.name]: e.target.value })
+    }
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -58,7 +67,12 @@ const ProductUpdate = ({ match }) => {
                 <div className="col-md-10">
                     <h4>Product Update</h4>
                     <hr />
-                    {JSON.stringify(values)}
+                    {/* {JSON.stringify(values)} */}
+                    <ProductUpdateForm
+                        handleChange={handleChange}
+                        handleSubmit={handleSubmit}
+                        values={values}
+                        setValues={setValues} />
 
                 </div>
             </div>

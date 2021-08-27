@@ -2,13 +2,10 @@ import React from 'react'
 import { Select } from 'antd'
 
 
-const ProductCreateForm = ({
+const ProductUpdateForm = ({
     handleChange,
     handleSubmit,
     values,
-    handleCategoryChange,
-    subOptions,
-    showSub,
     setValues }) => {
     const { title,
         description,
@@ -95,7 +92,7 @@ const ProductCreateForm = ({
                     {brands.map(b => <option key={b} value={b}>{b}</option>)}
                 </select>
             </div>
-            <div className="form-group">
+            {/* <div className="form-group">
                 <label>Category</label>
                 <select
                     name="category"
@@ -120,7 +117,7 @@ const ProductCreateForm = ({
                     )}
                 </Select>
 
-            </div>}
+            </div>} */}
             <br />
             <button className="btn btn-outline-info">Save</button>
         </form>
@@ -130,4 +127,4 @@ const ProductCreateForm = ({
 }
 
 
-export default ProductCreateForm
+export default ProductUpdateForm
