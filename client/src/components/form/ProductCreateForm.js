@@ -60,7 +60,7 @@ const ProductCreateForm = ({
                 <select name="shipping"
                     className="form-control"
                     onChange={handleChange}>
-                    <option value="No">Please Select</option>
+                    <option value="">Please Select</option>
                     <option value="No">No</option>
                     <option value="Yes">Yes</option>
                 </select>
