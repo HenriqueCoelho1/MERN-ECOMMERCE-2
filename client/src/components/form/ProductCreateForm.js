@@ -2,6 +2,9 @@ import React from 'react'
 import { Select } from 'antd'
 
 
+const { Option } = Select
+
+
 const ProductCreateForm = ({
     handleChange,
     handleSubmit,
@@ -116,7 +119,7 @@ const ProductCreateForm = ({
                     value={subs}
                     onChange={value => setValues({ ...values, subs: value })}>
                     {subOptions.length && subOptions.map((s) =>
-                        <option key={s._id} value={s._id}>{s.name}</option>
+                        <Option key={s._id} value={s._id}>{s.name}</Option>
                     )}
                 </Select>
 

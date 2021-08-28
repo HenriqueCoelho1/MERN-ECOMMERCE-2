@@ -31,6 +31,7 @@ const ProductUpdate = ({ match }) => {
     const [subOptions, setSubOptions] = useState([])
     const [showSub, setShowSub] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [arrayOfSubsIds, setArrayOfSubsIds] = useState([])
 
     const { user } = useSelector((state) => ({ ...state }))
 
@@ -45,8 +46,24 @@ const ProductUpdate = ({ match }) => {
     const loadProduct = () => {
         getProduct(slug)
             .then(p => {
+                //load single product
                 setValues({ ...values, ...p.data })
+                //load single product category subs
+                if (p && p.data && p.data.category) {
+                    getCategorySubs(p.data.category._id).then((res) => {
+                        setSubOptions(res.data); // on first load, show default subs
+                    });
+                }
+                //prepare array of subs ids to show as default
+
+                let arr = []
+                p.data.subs.map(s => {
+                    arr.push(s._id)
+                })
+                console.log(arr)
+                setArrayOfSubsIds(prev => arr)
             })
+
     }
 
     const loadCategories = () =>
@@ -58,6 +75,7 @@ const ProductUpdate = ({ match }) => {
 
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value })
+
     }
 
     const handleCategoryChange = (e) => {
@@ -91,7 +109,10 @@ const ProductUpdate = ({ match }) => {
                         setValues={setValues}
                         categories={categories}
                         showSub={showSub}
-                        handleCategoryChange={handleCategoryChange} />
+                        subOptions={subOptions}
+                        handleCategoryChange={handleCategoryChange}
+                        arrayOfSubsIds={arrayOfSubsIds}
+                        setArrayOfSubsIds={setArrayOfSubsIds} />
 
                 </div>
             </div>

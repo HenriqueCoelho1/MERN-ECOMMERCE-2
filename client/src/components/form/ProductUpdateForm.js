@@ -1,6 +1,8 @@
 import React from 'react'
 import { Select } from 'antd'
 
+const { Option } = Select
+
 
 const ProductUpdateForm = ({
     handleChange,
@@ -8,6 +10,10 @@ const ProductUpdateForm = ({
     values,
     setValues,
     categories,
+    subOptions,
+    showSub,
+    arrayOfSubsIds,
+    setArrayOfSubsIds,
     handleCategoryChange }) => {
     const { title,
         description,
@@ -100,26 +106,26 @@ const ProductUpdateForm = ({
                     name="category"
                     className="form-control"
                     onChange={handleCategoryChange}>
-                    <option>{categories ? categories.name : "Please Select"}</option>
+                    <option>{category ? category.name : "Please Select"}</option>
                     {categories.length > 0 && categories.map((c) => (
                         <option value={c._id} key={c._id}>{c.name}</option>
                     ))}
                 </select>
             </div>
-            {/* {showSub && <div>
+            <div>
                 <label>Sub Category</label>
                 <Select
                     mode="multiple"
                     style={{ width: '100%' }}
                     placeholder="Please Select"
-                    value={subs}
-                    onChange={value => setValues({ ...values, subs: value })}>
+                    value={arrayOfSubsIds}
+                    onChange={value => setArrayOfSubsIds(value)}>
                     {subOptions.length && subOptions.map((s) =>
-                        <option key={s._id} value={s._id}>{s.name}</option>
+                        <Option key={s._id} value={s._id}>{s.name}</Option>
                     )}
                 </Select>
 
-            </div>} */}
+            </div>
             <br />
             <button className="btn btn-outline-info">Save</button>
         </form>
