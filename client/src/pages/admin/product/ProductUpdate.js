@@ -67,7 +67,10 @@ const ProductUpdate = ({ match }) => {
     }
 
     const loadCategories = () =>
-        getCategories().then((c) => setValues({ ...values, categories: c.data }))
+        getCategories().then((c) => {
+            console.log("GET CATEGORIES IN UPDATE PRODUCT", c.data)
+            setCategories(c.data)
+        })
 
     const handleSubmit = (e) => {
         e.preventDefault()
