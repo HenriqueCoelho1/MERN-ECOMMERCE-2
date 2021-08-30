@@ -112,9 +112,18 @@ const ProductUpdate = ({ match }) => {
                     <AdminNav />
                 </div>
                 <div className="col-md-10">
-                    <h4>Product Update</h4>
+                    {loading ? <LoadingOutlined className="text-danger" /> : <h4>Product Update</h4>}
                     <hr />
                     {JSON.stringify(values)}
+
+                    <div className="p-3">
+                        <FileUpload
+                            values={values}
+                            setValues={setValues}
+                            setLoading={setLoading} />
+                    </div>
+
+
                     <ProductUpdateForm
                         handleChange={handleChange}
                         handleSubmit={handleSubmit}
