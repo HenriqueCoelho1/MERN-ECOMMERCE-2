@@ -114,7 +114,7 @@ const ProductUpdate = ({ match }) => {
                 <div className="col-md-10">
                     {loading ? <LoadingOutlined className="text-danger" /> : <h4>Product Update</h4>}
                     <hr />
-                    {JSON.stringify(values)}
+                    {/* {JSON.stringify(values)} */}
 
                     <div className="p-3">
                         <FileUpload
