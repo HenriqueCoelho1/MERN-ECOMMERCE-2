@@ -70,7 +70,7 @@ exports.update = async (req, res) => {
     }
 }
 
-// with pagination
+// without pagination
 // exports.list = async (req, res) => {
 //     try {
 //         const { sort, order, limit } = req.body
