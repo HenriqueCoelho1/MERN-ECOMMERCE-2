@@ -18,6 +18,7 @@ import SubCreate from './pages/admin/sub/SubCreate'
 import ProductCreate from './pages/admin/product/ProductCreate'
 import ProductUpdate from './pages/admin/product/ProductUpdate'
 import AllProducts from './pages/admin/product/AllProducts'
+import Product from './pages/Product'
 import Home from './pages/Home'
 import Header from './components/nav/Header'
 import UserRoute from './components/routes/UserRoute'
@@ -77,6 +78,7 @@ const App = () => {
         <AdminRoute exact path="/admin/product" component={ProductCreate} />
         <AdminRoute exact path="/admin/product/:slug" component={ProductUpdate} />
         <AdminRoute exact path="/admin/products" component={AllProducts} />
+        <AdminRoute exact path="/product/:slug" component={Product} />
       </Switch>
     </>
   )
