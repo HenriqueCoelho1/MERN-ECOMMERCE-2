@@ -28,7 +28,9 @@ const Product = ({ match }) => {
             </div>
 
             <div className="row">
-                <h4>Related Products</h4>
+                <div className="col text-center pt-5 pb-5">
+                    <h4>Related Products</h4>
+                </div>
             </div>
         </div>
 

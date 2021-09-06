@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card } from 'antd'
+import { Card, Descriptions, Tabs } from 'antd'
 import { Link } from 'react-router-dom'
 import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons'
 import { Carousel } from 'react-responsive-carousel'
@@ -8,10 +8,11 @@ import defaultImage from '../../images/default.png'
 import ProductListItems from './ProductListItems'
 
 const { Meta } = Card
+const { TabPane } = Tabs
 
 const SingleProduct = ({ product }) => {
 
-    const { title, images } = product
+    const { title, images, description } = product
     return (
         <>
             <div className="col-md-7">
@@ -25,6 +26,15 @@ const SingleProduct = ({ product }) => {
                             <img src={defaultImage} className="mb-3 card-image" />
                         }
                     ></Card>}
+
+                <Tabs type="card">
+                    <TabPane tab="Description" key="1">
+                        {description && description}
+                    </TabPane>
+                    <TabPane tab="More" key="2">
+                        Call use on xx xxx xxxxx to learn more about this product
+                    </TabPane>
+                </Tabs>
             </div>
 
             <div className="col-md-5">
