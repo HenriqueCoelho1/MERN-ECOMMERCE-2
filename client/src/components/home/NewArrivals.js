@@ -4,6 +4,7 @@ import ProductCard from '../../components/cards/ProductCard'
 import LoadingCard from '../../components/cards/LoadingCard'
 import { Pagination } from 'antd'
 
+
 const NewArrivals = () => {
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(false)
