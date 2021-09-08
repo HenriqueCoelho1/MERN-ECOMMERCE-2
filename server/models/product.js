@@ -56,7 +56,7 @@ const productSchema = new mongoose.Schema({
         type: String,
         enum: ["Apple", "Samsung", "Microsoft", "Lenovo", "Acer"]
     },
-    rating: [{
+    ratings: [{
         star: Number,
         postedBy: {
             type: ObjectId,

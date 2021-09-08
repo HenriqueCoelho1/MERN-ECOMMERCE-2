@@ -134,7 +134,7 @@ exports.productStar = async (req, res) => {
 
     // if user haven't left rating yet, push it
     if (existingAlreadyObject === undefined) {
-        let ratingAdd = await product.findByIdAndUpdate(product._id, {
+        let ratingAdd = await Product.findByIdAndUpdate(product._id, {
             $push: { ratings: { star, postedBy: user._id } }
         }, { new: true }).exec()
         console.log("Rating Added", ratingAdd)
