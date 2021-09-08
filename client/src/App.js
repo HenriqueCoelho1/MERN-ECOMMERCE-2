@@ -68,9 +68,9 @@ const App = () => {
         <Route exact path="/register/complete" component={RegisterComplete} />
         <Route exact path="/forgot/password" component={ForgotPassword} />
         <Route exact path="/product/:slug" component={Product} />
-        <UserRoute exact path="/user/History" component={History} />
-        <UserRoute exact path="/user/Password" component={Password} />
-        <UserRoute exact path="/user/Wishlist" component={Wishlist} />
+        <UserRoute exact path="/user/history" component={History} />
+        <UserRoute exact path="/user/password" component={Password} />
+        <UserRoute exact path="/user/wishlist" component={Wishlist} />
         <AdminRoute exact path="/admin/dashboard" component={Dashboard} />
         <AdminRoute exact path="/admin/category" component={CategoryCreate} />
         <AdminRoute exact path="/admin/category/:slug" component={CategoryUpdate} />
