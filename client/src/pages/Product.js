@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { getProduct } from '../functions/product'
+import { getProduct, productStar } from '../functions/product'
 import SingleProduct from '../components/cards/SingleProduct'
+import { useSelector } from 'react-redux'
 
 const Product = ({ match }) => {
 
 
     const [product, setProduct] = useState({})
+    const [star, setStar] = useState(0)
     const { slug } = match.params
+
+    const { user } = useSelector((state) => ({ ...state }))
 
     useEffect(() => {
         loadingSingleProduct()
@@ -20,10 +24,21 @@ const Product = ({ match }) => {
         })
     }
 
+    const onStarClick = (newRating, name) => {
+        setStar(newRating)
+
+
+        productStar(name, star, user.token)
+            .then(res => {
+                console.log("STAR RESPONSE -->", res.data)
+                loadingSingleProduct()
+            })
+    }
+
     return (
         <div className="container-fluid">
             <div className="row pt-4">
-                <SingleProduct product={product} />
+                <SingleProduct product={product} onStarClick={onStarClick} star={star} />
 
             </div>
 
