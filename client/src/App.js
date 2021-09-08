@@ -67,6 +67,7 @@ const App = () => {
         <Route exact path="/register" component={Register} />
         <Route exact path="/register/complete" component={RegisterComplete} />
         <Route exact path="/forgot/password" component={ForgotPassword} />
+        <Route exact path="/product/:slug" component={Product} />
         <UserRoute exact path="/user/History" component={History} />
         <UserRoute exact path="/user/Password" component={Password} />
         <UserRoute exact path="/user/Wishlist" component={Wishlist} />
@@ -78,7 +79,6 @@ const App = () => {
         <AdminRoute exact path="/admin/product" component={ProductCreate} />
         <AdminRoute exact path="/admin/product/:slug" component={ProductUpdate} />
         <AdminRoute exact path="/admin/products" component={AllProducts} />
-        <AdminRoute exact path="/product/:slug" component={Product} />
       </Switch>
     </>
   )
