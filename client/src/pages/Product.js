@@ -12,11 +12,27 @@ const Product = ({ match }) => {
 
     const { user } = useSelector((state) => ({ ...state }))
 
+    // console.log("PRODUCT ->>>>>>>>>>", product)
+    // console.log("PRODUCT RATINGS ->>>>>>>>>", product.ratings)
+
     useEffect(() => {
         loadingSingleProduct()
 
     }, [slug])
 
+    useEffect(() => {
+        console.log("HERE PRODUCT ------->", product)
+
+        if (product.ratings && user) {
+            let existingAlreadyObject = product.ratings.find((ele) => (
+                ele.postedBy.toString() === user._id.toString()
+            ))
+
+            existingAlreadyObject && setStar(existingAlreadyObject)
+
+        }
+
+    }, [])
 
     const loadingSingleProduct = () => {
         getProduct(slug).then(res => {
@@ -28,7 +44,7 @@ const Product = ({ match }) => {
         setStar(newRating)
 
 
-        productStar(name, star, user.token)
+        productStar(name, newRating, user.token)
             .then(res => {
                 console.log("STAR RESPONSE -->", res.data)
                 loadingSingleProduct()

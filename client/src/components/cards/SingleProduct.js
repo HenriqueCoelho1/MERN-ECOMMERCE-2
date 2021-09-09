@@ -9,7 +9,6 @@ import ProductListItems from './ProductListItems'
 import StarRating from 'react-star-ratings'
 import RatingModal from '../modal/RatingModal'
 
-const { Meta } = Card
 const { TabPane } = Tabs
 
 const SingleProduct = ({ product, onStarClick, star }) => {
