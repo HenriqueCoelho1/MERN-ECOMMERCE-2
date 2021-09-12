@@ -1,6 +1,5 @@
 import React from 'react'
 import { Card } from 'antd'
-import StarRating from 'react-star-ratings'
 import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons'
 import defaultImage from '../../images/default.png'
 import { Link } from 'react-router-dom'

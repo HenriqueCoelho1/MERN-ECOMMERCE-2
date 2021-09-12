@@ -41,6 +41,7 @@ const RatingModal = ({ children }) => {
                 }}
                 onCancel={() => setModal(false)}
             >{children}</Modal>
+            {/* //this children is the star rating when the modal is turned to true */}
 
         </>
     )

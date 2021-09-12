@@ -59,6 +59,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
                             isSelectable={true}
                             starRatedColor="red"
                         />
+                        {/* //this is not children is the star rating when the modal is turned to true */}
                     </RatingModal>
                 ]} >
                     <ProductListItems product={product} />
