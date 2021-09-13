@@ -29,7 +29,7 @@ router.post('/products', list)
 router.put('/product/star/:productId', authCheck, productStar)
 
 //related
-router.get('product/related/:productId', listRelated)
+router.get('/product/related/:productId', listRelated)
 
 
 
