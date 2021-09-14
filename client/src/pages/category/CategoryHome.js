@@ -7,23 +7,43 @@ const CategoryHome = ({ match }) => {
     const [category, setCategory] = useState({})
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(false)
+    const [categoryName, setCategoryName] = useState("")
 
     const { slug } = match.params
 
     useEffect(() => {
         setLoading(true)
-        getCategory(slug).then(c => {
-            console.log("/category/:slug", c.data)
-            setCategory(c.data)
+        getCategory(slug).then(res => {
+            setCategory(res.data.category)
+            setProducts(res.data.products)
+            setCategoryName(res.data.category.name)
+            setLoading(false)
+            console.log("/category/:slug", res.data.category)
+            console.log("/category/:slug", res.data.products)
 
         })
 
     }, [])
     return (
-        <p>
-            {match.params.slug}
+        <div className="container-fluid">
+            <div className="row">
+                <div className="col">
+                    {loading ?
+                        (<h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
+                            Loading...
+                        </h4>)
+                        : (<h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
+                            {products.length} Products in {categoryName} category
+                        </h4>)}
+                </div>
+            </div>
 
-        </p>
+            <div className="row">
+                {products.map((p) => <div className="col" key={p._id}>
+                    <ProductCard product={p} />
+                </div>)}
+            </div>
+        </div>
     )
 }
 
