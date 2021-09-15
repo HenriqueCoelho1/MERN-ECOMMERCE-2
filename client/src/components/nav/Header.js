@@ -12,6 +12,7 @@ import firebase from 'firebase'
 import { useDispatch, useSelector } from 'react-redux'
 import { LOGOUT } from '../../actions/types'
 import { useHistory } from 'react-router-dom'
+import Search from '../form/Search'
 
 const { SubMenu, Item } = Menu
 
@@ -40,12 +41,13 @@ const Header = () => {
     return (
         <>
             {user && <Menu onClick={handleClick} selectedKeys={[home]} mode="horizontal">
-                <Item key="home" icon={<AppstoreOutlined />}>
+                <Item key="home" icon={<AppstoreOutlined />} className="mr-auto">
                     <Link to="/">Home</Link>
                 </Item>
 
 
-                <SubMenu key="SubMenu" icon={<SettingOutlined />} title={user.email && user.email.split('@')[0]} className="ml-auto">
+
+                <SubMenu key="SubMenu" icon={<SettingOutlined />} title={user.email && user.email.split('@')[0]}>
                     {user && user.role === "subscriber" &&
                         <Item>
                             <Link to="/user/history">Dashboard</Link>
@@ -59,6 +61,12 @@ const Header = () => {
                     <Item icon={<LogoutOutlined />} onClick={logout}>Logout</Item>
 
                 </SubMenu>
+
+
+                <span className="ml-auto p-1">
+                    <Search />
+                </span>
+
             </Menu>}
 
             {!user && <Menu onClick={handleClick} selectedKeys={[home]} mode="horizontal">
@@ -73,7 +81,12 @@ const Header = () => {
                 <Item key="login" icon={<UserOutlined />}>
                     <Link to="/Login">Login</Link>
                 </Item>
+                <span className="ml-auto p-1">
+                    <Search />
+                </span>
             </Menu>}
+
+
         </>
     )
 
