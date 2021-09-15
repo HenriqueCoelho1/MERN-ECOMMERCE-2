@@ -5,7 +5,8 @@ import {
     SettingOutlined,
     UserOutlined,
     UserAddOutlined,
-    LogoutOutlined
+    LogoutOutlined,
+    ShopOutlined
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import firebase from 'firebase'
@@ -41,11 +42,17 @@ const Header = () => {
     return (
         <>
             {user && <Menu onClick={handleClick} selectedKeys={[home]} mode="horizontal">
-                <Item key="home" icon={<AppstoreOutlined />} className="mr-auto">
-                    <Link to="/">Home</Link>
-                </Item>
+                <div>
+                    <Item key="home" icon={<AppstoreOutlined />}>
+                        <Link to="/">Home</Link>
+                    </Item>
+                </div>
 
-
+                <div className="mr-auto">
+                    <Item key="shop" icon={<ShopOutlined />}>
+                        <Link to="/shop">Shop</Link>
+                    </Item>
+                </div>
 
                 <SubMenu key="SubMenu" icon={<SettingOutlined />} title={user.email && user.email.split('@')[0]}>
                     {user && user.role === "subscriber" &&
@@ -70,9 +77,17 @@ const Header = () => {
             </Menu>}
 
             {!user && <Menu onClick={handleClick} selectedKeys={[home]} mode="horizontal">
-                <Item key="home" icon={<AppstoreOutlined />} className="mr-auto">
-                    <Link to="/">Home</Link>
-                </Item>
+                <div>
+                    <Item key="home" icon={<AppstoreOutlined />}>
+                        <Link to="/">Home</Link>
+                    </Item>
+                </div>
+
+                <div className="mr-auto">
+                    <Item key="shop" icon={<ShopOutlined />}>
+                        <Link to="/shop">Shop</Link>
+                    </Item>
+                </div>
 
 
                 <Item key="register" icon={<UserAddOutlined />}>
