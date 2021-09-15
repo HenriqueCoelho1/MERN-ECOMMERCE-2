@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react'
-import { getCategory } from '../../functions/category'
+import { getSub } from '../../functions/sub'
 import ProductCard from '../../components/cards/ProductCard'
 
-const CategoryHome = ({ match }) => {
-    const [category, setCategory] = useState({})
+const SubHome = ({ match }) => {
+    const [sub, setSub] = useState({})
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(false)
-    const [categoryName, setCategoryName] = useState("")
+    const [subName, setSubName] = useState("")
 
     const { slug } = match.params
 
     useEffect(() => {
         setLoading(true)
-        getCategory(slug).then(res => {
+        getSub(slug).then(res => {
             setLoading(false)
-            setCategory(res.data.category)
+            setSub(res.data.sub)
             setProducts(res.data.products)
-            setCategoryName(res.data.category.name)
-            console.log("/category/:slug", res.data.category)
-            console.log("/category/:slug", res.data.products)
+            setSubName(res.data.sub.name)
+            console.log("/sub/:slug", res.data.sub)
+            console.log("/sub/:slug", res.data.products)
 
         })
 
@@ -32,7 +32,7 @@ const CategoryHome = ({ match }) => {
                             Loading...
                         </h4>)
                         : (<h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
-                            {products.length} Products in {categoryName} category
+                            {products.length} Products in {subName} sub category
                         </h4>)}
                 </div>
             </div>
@@ -46,4 +46,4 @@ const CategoryHome = ({ match }) => {
     )
 }
 
-export default CategoryHome
+export default SubHome

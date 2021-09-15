@@ -21,6 +21,7 @@ import AllProducts from './pages/admin/product/AllProducts'
 import Product from './pages/Product'
 import Home from './pages/Home'
 import CategoryHome from './pages/category/CategoryHome'
+import SubHome from './pages/sub/SubHome'
 import Header from './components/nav/Header'
 import UserRoute from './components/routes/UserRoute'
 import AdminRoute from './components/routes/AdminRoute'
@@ -70,6 +71,7 @@ const App = () => {
         <Route exact path="/forgot/password" component={ForgotPassword} />
         <Route exact path="/product/:slug" component={Product} />
         <Route exact path="/category/:slug" component={CategoryHome} />
+        <Route exact path="/sub/:slug" component={SubHome} />
         <UserRoute exact path="/user/history" component={History} />
         <UserRoute exact path="/user/password" component={Password} />
         <UserRoute exact path="/user/wishlist" component={Wishlist} />
