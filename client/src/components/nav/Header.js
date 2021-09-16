@@ -21,15 +21,13 @@ const { Item } = Menu
 
 const Header = () => {
 
-    const [home, setHome] = useState('')
-    const [shop, setShop] = useState('')
+    const [current, setCurrent] = useState('')
     const dispatch = useDispatch()
     const { user } = useSelector((state) => ({ ...state }))
     const history = useHistory()
 
     const handleClick = (e) => {
-        setHome(e.key)
-        setShop(e.key)
+        setCurrent(e.key)
     }
 
     const logout = () => {
@@ -43,69 +41,65 @@ const Header = () => {
 
 
     return (
-        <>
-            {user && <Menu onClick={handleClick} selectedKeys={[home, shop]} mode="horizontal">
-                <div>
-                    <Item key="home" icon={<AppstoreOutlined />}>
-                        <Link to="/">Home</Link>
-                    </Item>
-                </div>
+        <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+            <Item key="home" icon={<AppstoreOutlined />}>
+                <Link to="/">
+                    Home
+                </Link>
+            </Item>
+            <Item key="shop" icon={<ShopOutlined />} className="mr-auto">
+                <Link to="/shop">
+                    Shop
+                </Link>
+            </Item>
 
-                <div className="mr-auto">
-                    <Item key="shop" icon={<ShopOutlined />}>
-                        <Link to="/shop">Shop</Link>
-                    </Item>
-                </div>
-
-                <Menu.SubMenu key="SubMenu" icon={<SettingOutlined />} title={user.email && user.email.split('@')[0]}>
-                    {user && user.role === "subscriber" &&
-                        <Item>
-                            <Link to="/user/history">Dashboard</Link>
-                        </Item>
-                    }
-                    {user && user.role === "admin" &&
-                        <Item>
-                            <Link to="/admin/dashboard">Dashboard</Link>
-                        </Item>
-                    }
-                    <Item icon={<LogoutOutlined />} onClick={logout}>Logout</Item>
-
-                </Menu.SubMenu>
+            <Item key="search" className="p-2 no-decoration">
+                <Search />
+            </Item>
 
 
-                <span className="ml-auto p-1">
-                    <Search />
-                </span>
-
-            </Menu>}
-
-            {!user && <Menu onClick={handleClick} selectedKeys={[home]} mode="horizontal">
-                <div>
-                    <Item key="home" icon={<AppstoreOutlined />}>
-                        <Link to="/">Home</Link>
-                    </Item>
-                </div>
-
-                <div className="mr-auto">
-                    <Item key="shop" icon={<ShopOutlined />}>
-                        <Link to="/shop">Shop</Link>
-                    </Item>
-                </div>
-
-
-                <Item key="register" icon={<UserAddOutlined />}>
-                    <Link to="/register">Register</Link>
+            {!user && (
+                <Item key="register" icon={<UserAddOutlined />} >
+                    <Link to="/register">
+                        Register
+                    </Link>
                 </Item>
+            )}
+
+            {!user && (
                 <Item key="login" icon={<UserOutlined />}>
-                    <Link to="/Login">Login</Link>
+                    <Link to="/login">
+                        Login
+                    </Link>
                 </Item>
-                <span className="ml-auto p-1">
-                    <Search />
-                </span>
-            </Menu>}
+            )}
 
 
-        </>
+            {user && (
+                <Menu.SubMenu
+                    icon={<SettingOutlined />}
+                    title={user.email && user.email.split('@')[0]}
+                    key="dashboard"
+                >
+                    {user && user.role === "subscriber" && (
+                        <Item key={user && user.role === "subscriber" && "subscriber"}>
+                            <Link to="user/history">Dashboard</Link>
+                        </Item>
+                    )}
+                    {user && user.role === "admin" && (
+                        <Item key={user && user.role === "admin" && "admin"}>
+                            <Link to="admin/dashboard">Dashboard</Link>
+                        </Item>
+                    )}
+                    <Item icon={<LogoutOutlined />} onClick={logout}>
+                        Logout
+                    </Item>
+                </Menu.SubMenu>
+            )}
+
+
+
+        </Menu>
     )
 
 }
