@@ -15,18 +15,21 @@ import { LOGOUT } from '../../actions/types'
 import { useHistory } from 'react-router-dom'
 import Search from '../form/Search'
 
-const { SubMenu, Item } = Menu
+const { Item } = Menu
+
 
 
 const Header = () => {
 
     const [home, setHome] = useState('')
+    const [shop, setShop] = useState('')
     const dispatch = useDispatch()
     const { user } = useSelector((state) => ({ ...state }))
     const history = useHistory()
 
     const handleClick = (e) => {
         setHome(e.key)
+        setShop(e.key)
     }
 
     const logout = () => {
@@ -41,7 +44,7 @@ const Header = () => {
 
     return (
         <>
-            {user && <Menu onClick={handleClick} selectedKeys={[home]} mode="horizontal">
+            {user && <Menu onClick={handleClick} selectedKeys={[home, shop]} mode="horizontal">
                 <div>
                     <Item key="home" icon={<AppstoreOutlined />}>
                         <Link to="/">Home</Link>
@@ -54,7 +57,7 @@ const Header = () => {
                     </Item>
                 </div>
 
-                <SubMenu key="SubMenu" icon={<SettingOutlined />} title={user.email && user.email.split('@')[0]}>
+                <Menu.SubMenu key="SubMenu" icon={<SettingOutlined />} title={user.email && user.email.split('@')[0]}>
                     {user && user.role === "subscriber" &&
                         <Item>
                             <Link to="/user/history">Dashboard</Link>
@@ -67,7 +70,7 @@ const Header = () => {
                     }
                     <Item icon={<LogoutOutlined />} onClick={logout}>Logout</Item>
 
-                </SubMenu>
+                </Menu.SubMenu>
 
 
                 <span className="ml-auto p-1">
