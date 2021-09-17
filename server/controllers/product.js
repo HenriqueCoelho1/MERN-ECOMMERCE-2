@@ -185,7 +185,7 @@ const handleQuery = async (req, res, query) => {
 
 const handlePrice = async (req, res, price) => {
     try {
-        let products = Product.find({
+        let products = await Product.find({
             price: {
                 $gte: price[0], //gte means great than
                 $lte: price[1] //let means less than

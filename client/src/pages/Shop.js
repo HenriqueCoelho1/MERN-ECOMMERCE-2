@@ -2,11 +2,19 @@ import React, { useState, useEffect } from 'react'
 import { getProductsByCount, fetchProductsByFilter } from '../functions/product'
 import { useSelector, useDispatch } from 'react-redux'
 import ProductCard from '../components/cards/ProductCard'
+import { Menu, Slider } from 'antd'
+import { DollarOutlined } from '@ant-design/icons'
+import { SEARCH_QUERY } from '../actions/types'
 
+
+const { ItemGroup, SubMenu } = Menu
 const Shop = () => {
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(false)
+    const [price, setPrice] = useState([0, 0])
+    const [ok, setOk] = useState(false)
 
+    let dispatch = useDispatch()
     let { search } = useSelector((state) => ({ ...state })) //get the text
 
     const { text } = search //getting the text from the search state
@@ -42,15 +50,53 @@ const Shop = () => {
         })
     }
 
+    //3. load products based on price range
+    useEffect(() => {
+        console.log("ok to request")
+        fetchProducts({ price })
+    }, [ok])
+
+
+    const handleSlider = (value) => {
+        dispatch({
+            type: SEARCH_QUERY,
+            payload: { text: "" }
+        })
+        setPrice(value)
+        setTimeout(() => {
+            setOk(!ok)
+
+        }, 300)
+
+    }
+
     return (
         <div className="container-fluid">
             <div className="row">
-                <div className="col-md-3">
-                    Search/Filter menu
+                <div className="col-md-3 pt-2">
+                    <h4>Search/Filter menu</h4>
+                    <hr />
+
+                    <Menu defaultOpenKeys={['1', '2']} mode="inline">
+                        <SubMenu key="1" title={<span className="h6">
+                            <DollarOutlined />{" "}Price
+                        </span>}>
+                            <div>
+                                <Slider
+                                    className="ml-4 mr-4"
+                                    tipFormatter={(v) => `$${v}`}
+                                    range
+                                    value={price}
+                                    onChange={handleSlider}
+                                    max="2999" />
+                            </div>
+
+                        </SubMenu>
+                    </Menu>
 
                 </div>
 
-                <div className="col-md-9">
+                <div className="col-md-9 pt-2">
                     {loading ? (<h4 className="text-danger">Loading...</h4>)
                         :
                         (<h4 className="text-danger">Products</h4>)}
