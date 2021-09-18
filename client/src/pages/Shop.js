@@ -23,6 +23,12 @@ const Shop = () => {
 
     }, [])
 
+    const fetchProducts = (arg) => {
+        fetchProductsByFilter(arg).then(res => {
+            setProducts(res.data)
+        })
+    }
+
     //1. load products by default on page load 
     const loadAllProducts = () => {
         setLoading(true)
@@ -43,16 +49,12 @@ const Shop = () => {
         return () => clearTimeout(delayed)
     }, [text])
 
-
-    const fetchProducts = (arg) => {
-        fetchProductsByFilter(arg).then(res => {
-            setProducts(res.data)
-        })
-    }
-
     //3. load products based on price range
     useEffect(() => {
         console.log("ok to request")
+        if (price[0] === 0 && price[1] === 0) {
+            loadAllProducts()
+        }// this if statement load all products when the reach the 0 and 0, this work at beginning 
         fetchProducts({ price })
     }, [ok])
 
