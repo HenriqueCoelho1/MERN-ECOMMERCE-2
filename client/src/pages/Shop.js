@@ -74,6 +74,7 @@ const Shop = () => {
             type: SEARCH_QUERY,
             payload: { text: "" }
         })
+        setCategoryIds([])
         setPrice(value)
         setTimeout(() => {
             setOk(!ok)
@@ -144,13 +145,13 @@ const Shop = () => {
 
                         </SubMenu>
 
-                        <SubMenu key="2" title={<span className="h6">
-                            <DownSquareOutlined />{" "}Category
-                        </span>}>
+                        <SubMenu key="2" title={
+                            <span className="h6">
+                                <DownSquareOutlined />{" "}Category
+                            </span>}>
                             <div style={{ marginTop: '-10px' }}>
                                 {showCategories()}
                             </div>
-
                         </SubMenu>
                     </Menu>
 
@@ -161,7 +162,7 @@ const Shop = () => {
                         :
                         (<h4 className="text-danger">Products</h4>)}
 
-                    {products.length < 1 && <p>Product not found</p>}
+                    {products.length < 1 && <p>Products not found</p>}
 
                     <div className="row pb-5">
                         {products.map(p =>

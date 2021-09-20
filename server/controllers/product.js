@@ -217,8 +217,35 @@ const handleCategory = async (req, res, category) => {
 
     }
 }
+
+const handleStars = async (req, res, stars) => {
+    Product.aggregate([
+        {
+            $project: {
+                document: "$$ROOT",
+                floorAverage: {
+                    $floor: { $avg: "$ratings.star" }
+                }
+            }
+        },
+        { $match: { floorAverage: stars } } //return the product star rating selected by the user
+        //if this match
+    ])
+        .limit(12)
+        .exec((err, aggregates) => {
+            if (err) console.log("Aggregate error -->", err)
+            Product.find({ _id: aggregates })
+                .populate('category', '_id name')
+                .populate('subs', '_id name')
+                .populate('postedBy', '_id name')
+                .exec(err, products => {
+                    if (err) console.log("PRODUCT AGGREGATE ERROR --->", err)
+                })
+
+        })
+}
 exports.searchFilters = async (req, res) => {
-    const { query, price, category } = req.body
+    const { query, price, category, stars } = req.body
 
     if (query) {
         console.log('query --->', query)
@@ -234,6 +261,11 @@ exports.searchFilters = async (req, res) => {
     if (category) {
         console.log('category --->', category)
         await handleCategory(req, res, category)
+    }
+
+    if (stars) {
+        console.log('stars --->', stars)
+        await handleStars(req, res, stars)
     }
 
 }
