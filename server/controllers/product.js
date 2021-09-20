@@ -240,6 +240,7 @@ const handleStars = async (req, res, stars) => {
                 .populate('postedBy', '_id name')
                 .exec(err, products => {
                     if (err) console.log("PRODUCT AGGREGATE ERROR --->", err)
+                    res.json(products)
                 })
 
         })

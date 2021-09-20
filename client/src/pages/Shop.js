@@ -4,8 +4,9 @@ import { getCategories } from '../functions/category'
 import { useSelector, useDispatch } from 'react-redux'
 import ProductCard from '../components/cards/ProductCard'
 import { Menu, Slider, Checkbox } from 'antd'
-import { DollarOutlined, DownSquareOutlined } from '@ant-design/icons'
+import { DollarOutlined, DownSquareOutlined, StarOutlined } from '@ant-design/icons'
 import { SEARCH_QUERY } from '../actions/types'
+import Star from '../components/form/Star'
 
 
 const { ItemGroup, SubMenu } = Menu
@@ -16,6 +17,7 @@ const Shop = () => {
     const [ok, setOk] = useState(false)
     const [categories, setCategories] = useState([])
     const [categoryIds, setCategoryIds] = useState([])
+    const [star, setStar] = useState("")
 
     let dispatch = useDispatch()
     let { search } = useSelector((state) => ({ ...state })) //get the text
@@ -23,7 +25,6 @@ const Shop = () => {
     const { text } = search //getting the text from the search state
     useEffect(() => {
         loadAllProducts()
-
         getCategories().then(res => setCategories(res.data))
 
     }, [])
@@ -66,6 +67,8 @@ const Shop = () => {
 
         }
 
+        // fetchProducts({ price })
+
     }, [ok])
 
 
@@ -76,6 +79,7 @@ const Shop = () => {
         })
         setCategoryIds([])
         setPrice(value)
+        setStar("")
         setTimeout(() => {
             setOk(!ok)
 
@@ -104,6 +108,7 @@ const Shop = () => {
             payload: { text: "" }
         })
         setPrice([0, 0])
+        setStar("")
         // console.log(e.target.value)
         let inTheState = [...categoryIds] //the values in the array already pushed
         let justChecked = e.target.value //the actual checkbox value
@@ -122,6 +127,44 @@ const Shop = () => {
 
         fetchProducts({ category: inTheState })
     }
+
+    //5. show products by star rating
+
+    const handleStarClick = (num) => {
+        // console.log(num)
+
+        dispatch({
+            type: SEARCH_QUERY,
+            payload: { text: "" }
+        })
+        setPrice([0, 0])
+        setCategoryIds([])
+        setStar(num)
+        fetchProducts({ stars: num })
+
+    }
+
+    const showStars = () => (
+        <div className="pr-4 pl-4 pb-2">
+            <Star starClick={handleStarClick}
+                numberOfStars={5}
+            />
+            <Star starClick={handleStarClick}
+                numberOfStars={4}
+            />
+            <Star starClick={handleStarClick}
+                numberOfStars={3}
+            />
+            <Star starClick={handleStarClick}
+                numberOfStars={2}
+            />
+            <Star starClick={handleStarClick}
+                numberOfStars={1}
+            />
+
+        </div>
+    )
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -129,7 +172,7 @@ const Shop = () => {
                     <h4>Search/Filter menu</h4>
                     <hr />
 
-                    <Menu defaultOpenKeys={['1', '2']} mode="inline">
+                    <Menu defaultOpenKeys={['1', '2', '3']} mode="inline">
                         <SubMenu key="1" title={<span className="h6">
                             <DollarOutlined />{" "}Price
                         </span>}>
@@ -147,10 +190,19 @@ const Shop = () => {
 
                         <SubMenu key="2" title={
                             <span className="h6">
-                                <DownSquareOutlined />{" "}Category
+                                <DownSquareOutlined />{" "}Categories
                             </span>}>
                             <div style={{ marginTop: '-10px' }}>
                                 {showCategories()}
+                            </div>
+                        </SubMenu>
+
+                        <SubMenu key="3" title={
+                            <span className="h6">
+                                <StarOutlined />{" "}Rating
+                            </span>}>
+                            <div style={{ marginTop: '-10px' }}>
+                                {showStars()}
                             </div>
                         </SubMenu>
                     </Menu>
@@ -162,10 +214,10 @@ const Shop = () => {
                         :
                         (<h4 className="text-danger">Products</h4>)}
 
-                    {products.length < 1 && <p>Products not found</p>}
+                    {products && products.length < 1 && <p>Products not found</p>}
 
                     <div className="row pb-5">
-                        {products.map(p =>
+                        {products && products.map(p =>
                         (<div className="col-md-4 mt-5" key={p._id}>
                             <ProductCard product={p} />
                         </div>))}
