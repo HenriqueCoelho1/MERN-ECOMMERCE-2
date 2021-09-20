@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { getProductsByCount, fetchProductsByFilter } from '../functions/product'
+import { getCategories } from '../functions/category'
 import { useSelector, useDispatch } from 'react-redux'
 import ProductCard from '../components/cards/ProductCard'
-import { Menu, Slider } from 'antd'
-import { DollarOutlined } from '@ant-design/icons'
+import { Menu, Slider, Checkbox } from 'antd'
+import { DollarOutlined, DownSquareOutlined } from '@ant-design/icons'
 import { SEARCH_QUERY } from '../actions/types'
 
 
@@ -13,6 +14,8 @@ const Shop = () => {
     const [loading, setLoading] = useState(false)
     const [price, setPrice] = useState([0, 0])
     const [ok, setOk] = useState(false)
+    const [categories, setCategories] = useState([])
+    const [categoryIds, setCategoryIds] = useState([])
 
     let dispatch = useDispatch()
     let { search } = useSelector((state) => ({ ...state })) //get the text
@@ -21,6 +24,8 @@ const Shop = () => {
     useEffect(() => {
         loadAllProducts()
 
+        getCategories().then(res => setCategories(res.data))
+
     }, [])
 
     const fetchProducts = (arg) => {
@@ -28,6 +33,7 @@ const Shop = () => {
             setProducts(res.data)
         })
     }
+
 
     //1. load products by default on page load 
     const loadAllProducts = () => {
@@ -54,8 +60,12 @@ const Shop = () => {
         console.log("ok to request")
         if (price[0] === 0 && price[1] === 0) {
             loadAllProducts()
-        }// this if statement load all products when the reach the 0 and 0, this work at beginning 
-        fetchProducts({ price })
+        }// this if statement load all products when the reach the 0 and 0, this work at beginning
+        else {
+            fetchProducts({ price })
+
+        }
+
     }, [ok])
 
 
@@ -72,6 +82,45 @@ const Shop = () => {
 
     }
 
+    //4. load products based on category
+    // show categories in a checkbox
+
+    const showCategories = () => categories.map(c =>
+        <div key={c._id}>
+            <Checkbox
+                onChange={handleCheckCategories}
+                className="pb-2 pl-4 pr-4"
+                value={c._id}
+                name="category"
+                checked={categoryIds.includes(c._id)}>
+                {c.name}
+            </Checkbox>
+        </div>)
+
+    const handleCheckCategories = (e) => {
+        dispatch({
+            type: SEARCH_QUERY,
+            payload: { text: "" }
+        })
+        setPrice([0, 0])
+        // console.log(e.target.value)
+        let inTheState = [...categoryIds] //the values in the array already pushed
+        let justChecked = e.target.value //the actual checkbox value
+        let foundInTheState = inTheState.indexOf(justChecked) //return index or -1
+
+        if (foundInTheState === -1) {
+            inTheState.push(justChecked)
+
+        } else {
+            //if found pull out 1 item from index
+            inTheState.splice(foundInTheState, 1)
+        }
+
+        setCategoryIds(inTheState)
+        // console.log(inTheState)
+
+        fetchProducts({ category: inTheState })
+    }
     return (
         <div className="container-fluid">
             <div className="row">
@@ -91,6 +140,15 @@ const Shop = () => {
                                     value={price}
                                     onChange={handleSlider}
                                     max="2999" />
+                            </div>
+
+                        </SubMenu>
+
+                        <SubMenu key="2" title={<span className="h6">
+                            <DownSquareOutlined />{" "}Category
+                        </span>}>
+                            <div style={{ marginTop: '-10px' }}>
+                                {showCategories()}
                             </div>
 
                         </SubMenu>
