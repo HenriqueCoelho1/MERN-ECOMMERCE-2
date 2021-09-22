@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { getProductsByCount, fetchProductsByFilter } from '../functions/product'
 import { getCategories } from '../functions/category'
+import { getSubs } from '../functions/sub'
 import { useSelector, useDispatch } from 'react-redux'
 import ProductCard from '../components/cards/ProductCard'
 import { Menu, Slider, Checkbox } from 'antd'
@@ -18,6 +19,8 @@ const Shop = () => {
     const [categories, setCategories] = useState([])
     const [categoryIds, setCategoryIds] = useState([])
     const [star, setStar] = useState("")
+    const [subs, setSubs] = useState([])
+    const [sub, setSub] = useState("")
 
     let dispatch = useDispatch()
     let { search } = useSelector((state) => ({ ...state })) //get the text
@@ -26,6 +29,7 @@ const Shop = () => {
     useEffect(() => {
         loadAllProducts()
         getCategories().then(res => setCategories(res.data))
+        getSubs().then(res => setSubs(res.data))
 
     }, [])
 
@@ -80,6 +84,7 @@ const Shop = () => {
         setCategoryIds([])
         setPrice(value)
         setStar("")
+        setSub("")
         setTimeout(() => {
             setOk(!ok)
 
@@ -109,6 +114,7 @@ const Shop = () => {
         })
         setPrice([0, 0])
         setStar("")
+        setSub("")
         // console.log(e.target.value)
         let inTheState = [...categoryIds] //the values in the array already pushed
         let justChecked = e.target.value //the actual checkbox value
@@ -140,6 +146,7 @@ const Shop = () => {
         setPrice([0, 0])
         setCategoryIds([])
         setStar(num)
+        setSub("")
         fetchProducts({ stars: num })
 
     }
@@ -165,6 +172,31 @@ const Shop = () => {
         </div>
     )
 
+    //6. show products by subs
+
+    const showSubs = () => subs.map(s =>
+        <div
+            className="p-1 m-1 badge badge-secondary"
+            onClick={() => handleSubmit(s)} key={s._id}
+            style={{ cursor: "pointer" }}>
+            {s.name}
+        </div>)
+
+    const handleSubmit = sub => {
+        // console.log("SUB", sub)
+        setSub(sub)
+
+        dispatch({
+            type: SEARCH_QUERY,
+            payload: { text: "" }
+        })
+        setPrice([0, 0])
+        setCategoryIds([])
+        setStar("")
+        fetchProducts({ sub })
+
+    }
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -172,7 +204,7 @@ const Shop = () => {
                     <h4>Search/Filter menu</h4>
                     <hr />
 
-                    <Menu defaultOpenKeys={['1', '2', '3']} mode="inline">
+                    <Menu defaultOpenKeys={['1', '2', '3', '4']} mode="inline">
                         <SubMenu key="1" title={<span className="h6">
                             <DollarOutlined />{" "}Price
                         </span>}>
@@ -203,6 +235,15 @@ const Shop = () => {
                             </span>}>
                             <div style={{ marginTop: '-10px' }}>
                                 {showStars()}
+                            </div>
+                        </SubMenu>
+
+                        <SubMenu key="4" title={
+                            <span className="h6">
+                                <DownSquareOutlined />{" "}Subs
+                            </span>}>
+                            <div style={{ marginTop: '-10px' }}>
+                                {showSubs()}
                             </div>
                         </SubMenu>
                     </Menu>
